@@ -30,6 +30,22 @@ func main() {
 	if *randomize {
 		questions = shuffle(questions)
 	}
+
+	fmt.Println("Total Questions:", total)
+	fmt.Println("Duration [s]:", *duration)
+
+	done:=make(chan bool, 1)
+}
+
+func shuffle(questions [][]string) [][]string {
+	s:=rand.NewSource(time.Now().UnixNano())
+	r:=rand.New(s)
+
+	for i:= range questions {
+		np:=r.Intn(len(questions) -1)
+		questions[i], questions[np] = questions[np], questions[i]
+	}
+	return questions
 }
 
 func loadRecords(csvFile string) [][]string {
